@@ -16,12 +16,15 @@ export function useComponentDidUpdate<T extends ReadonlyArray<unknown>>(callback
       callback(prevDeps.current, deps);
       prevDeps.current = deps;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
 
+  useEffect(() => {
     return () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
       ref.current.isComponentMounted = false;
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
+  }, [])
+  
+  return ref.current.isComponentMounted;
 };
